@@ -1,3 +1,4 @@
+import sequelize from "../config/db.js";
 import Product from "../models/product.model.js";
 
 // ✅ Add Product
@@ -37,7 +38,15 @@ export const getProductById = async (req, res) => {
 export const getProductsByCategory = async (req, res) => {
   try {
     const { category } = req.params;
-    const products = await Product.findAll({ where: { category } });
+
+    // Case-insensitive search for MySQL
+    const products = await Product.findAll({
+      where: sequelize.where(
+        sequelize.fn("LOWER", sequelize.col("category")),
+        category.toLowerCase()
+      ),
+    });
+
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
