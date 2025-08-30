@@ -1,16 +1,45 @@
 import sequelize from "../config/db.js";
 import Product from "../models/product.model.js";
+import cloudinary from "../utils/cloudinary.js";
 
-// ✅ Add Product
+
 export const addProduct = async (req, res) => {
   try {
-    const { name, description, price, stock, category, imageUrl } = req.body;
-    const product = await Product.create({ name, description, price, stock, category, imageUrl });
+    const { name, description, price, stock, category } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "Image file is required" });
+    }
+
+    // Cloudinary stream upload
+    const uploadResult = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "products" }, 
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(req.file.buffer);
+    });
+
+    const product = await Product.create({
+      name,
+      description,
+      price,
+      stock,
+      category,
+      imageUrl: uploadResult.secure_url,
+    });
+
     res.status(201).json({ message: "Product added successfully", product });
   } catch (error) {
+    console.error("AddProduct Error:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // ✅ Get all products
 export const getProducts = async (req, res) => {

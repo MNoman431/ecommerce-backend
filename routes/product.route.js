@@ -5,16 +5,16 @@ import {
     getProductById,
     getProductsByCategory,
     updateProduct,
-    deleteProduct
+    deleteProduct,
 } from "../controllers/product.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
-
-
+import { upload } from "../middleware/multer.middleware.js";
 
 const router = express.Router();
+// Create product (with image)
+router.post("/", authMiddleware, upload.single("image"), addProduct);
 
 // CRUD routes
-router.post("/", authMiddleware, addProduct); // Create
 router.get("/", getProducts);                 // Read all
 router.get("/:id", getProductById);          // Read single by ID
 router.get("/category/:category", getProductsByCategory); // Read by category
