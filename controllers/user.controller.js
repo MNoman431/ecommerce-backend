@@ -129,11 +129,18 @@ export const loginUser = asyncHandler(async (req, res) => {
   const token = generateToken({ id: user.id, role: user.role });
 
   // set cookie
+  // res.cookie("token", token, {
+  //   httpOnly: true, // prevents XSS attacks
+  //   secure: false, // set true if using https
+  //   maxAge: 24 * 60 * 60 * 1000, // 1 day
+  // });
   res.cookie("token", token, {
-    httpOnly: true, // prevents XSS attacks
-    secure: false, // set true if using https
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-  });
+  httpOnly: true,
+  secure: false, // localhost
+  sameSite: "lax", // ✅ important
+  maxAge: 24 * 60 * 60 * 1000
+});
+
 
   res.status(200).json(
     new ApiResponse(
