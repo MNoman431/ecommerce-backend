@@ -1,8 +1,6 @@
-// controllers/cart.controller.js
+
 import models from "../models/index.js";
 const { Cart, CartItem, Product } = models;
-
-
 // Add product to cart
 export const addToCart = async (req, res) => {
   try {
