@@ -145,7 +145,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   res.status(200).json(
     new ApiResponse(
       200,
-      { id: user.id, name: user.name, email: user.email, token },
+      { id: user.id, name: user.name, email: user.email, token,role:user.role },
       "Login successful"
     )
   );

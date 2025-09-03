@@ -15,7 +15,10 @@ import adminMiddleware from "../middleware/admin.middleware.js";
 const router = express.Router();
 // Create product (with image)
 // router.post("/", authMiddleware,adminMiddleware, upload.single("image"), addProduct);
-router.post("/",  upload.single("image"), addProduct);
+// router.post("/",  upload.single("image"), addProduct);
+router.post("/", upload.array("images", 5), addProduct);
+
+
 
 // CRUD routes
 router.get("/count", getTotalProducts);
@@ -24,7 +27,8 @@ router.get("/:id", getProductById);          // Read single by ID
 router.get("/category/:category", getProductsByCategory); // Read by category
 // router.put("/:id", authMiddleware,adminMiddleware, updateProduct);        // Update
 // router.put("/:id", authMiddleware, adminMiddleware, upload.single("image"), updateProduct);  
-router.patch("/:id",  upload.single("image"), updateProduct);  
+// Standardize to accept multiple images field name like create
+router.patch("/:id",  upload.array("images", 5), updateProduct);  
 // router.delete("/:id", authMiddleware,adminMiddleware, deleteProduct);    // Delete
 router.delete("/:id",  deleteProduct);    // Delete
 
