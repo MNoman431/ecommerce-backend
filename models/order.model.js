@@ -17,6 +17,27 @@ const Order = sequelize.define("Order", {
     allowNull: false,
     defaultValue: "pending", // pending, completed, cancelled etc.
   },
+  // Shipping details
+  shippingName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  shippingPhone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  shippingAddress: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  shippingCity: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  shippingPostalCode: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {});
 
 // Associations

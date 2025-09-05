@@ -5,6 +5,7 @@ const { Cart, CartItem, Product, Order, OrderItem, User } = models;
 export const placeOrder = async (req, res) => {
   try {
     const userId = req.user.id;
+    const shipping = req.body?.shipping || {};
 
     // Get user's cart
     const cart = await Cart.findOne({ where: { userId } });
@@ -21,7 +22,16 @@ export const placeOrder = async (req, res) => {
     }
 
     // Create Order
-    const order = await Order.create({ userId, totalAmount, status: "Pending" });
+    const order = await Order.create({
+      userId,
+      totalAmount,
+      status: "Pending",
+      shippingName: shipping.name || null,
+      shippingPhone: shipping.phone || null,
+      shippingAddress: shipping.address || null,
+      shippingCity: shipping.city || null,
+      shippingPostalCode: shipping.postalCode || null,
+    });
 
     // Create OrderItems
     for (let item of cartItems) {
@@ -43,6 +53,7 @@ export const placeOrder = async (req, res) => {
     return res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+// Removed direct order endpoint per request
 
 export const getOrders = async (req, res) => {
   try {
@@ -80,6 +91,28 @@ export const getOrdersCount = async (req, res) => {
   try {
     const count = await Order.count();
     return res.status(200).json({ count });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+// Admin: update order status
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const allowed = ["pending", "accepted", "cancelled", "ready_to_ship", "shipped", "delivered"];
+    if (!allowed.includes((status || "").toLowerCase())) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    const order = await Order.findByPk(id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    order.status = status;
+    await order.save();
+    return res.status(200).json({ message: "Status updated", order });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error", error: err.message });
