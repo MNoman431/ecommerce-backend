@@ -74,3 +74,14 @@ export const getAllOrders = async (req, res) => {
     return res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+// Admin: get total orders count
+export const getOrdersCount = async (req, res) => {
+  try {
+    const count = await Order.count();
+    return res.status(200).json({ count });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
