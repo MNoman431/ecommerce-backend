@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.route.js"
 import productRoutes from "./routes/product.route.js"
 import cartRoutes from "./routes/cart.route.js"
 import orderRoutes from "./routes/order.route.js"
+import paymentRoutes from "./routes/payment.route.js"
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error.middleware.js"
 import cors from "cors";
@@ -23,6 +24,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/payment", paymentRoutes);
 dbConnection();
 app.use(errorHandler);
 
