@@ -53,6 +53,7 @@ Product.init(
     sequelize,
     modelName: "Product",
   }
+  
 );
 
 export default Product;
