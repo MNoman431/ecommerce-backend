@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 // ✅ Allow frontend origin
 app.use(cors({
-  origin: "http://localhost:5173", // frontend URL
+  origin:"https://fancytopcovers.vercel.app", // frontend URL
   credentials: true // for cookies/jwt
 }));
 
