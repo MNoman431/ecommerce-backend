@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Load .env
 
+console.log("DB Host:", process.env.DB_HOST);
+console.log("DB User:", process.env.DB_USER);
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -20,6 +22,7 @@ const sequelize = new Sequelize(
     logging: false,
   }
 );
+
 
 export const dbConnection = async () => {
   try {
