@@ -58,8 +58,8 @@ export const loginUser = asyncHandler(async (req, res) => {
   // });
   res.cookie("token", token, {
   httpOnly: true,
-  secure: false, // localhost
-  sameSite: "lax", // ✅ important
+  secure: true, // localhost
+  sameSite: "none", // ✅ important
   maxAge: 24 * 60 * 60 * 1000
 });
 
