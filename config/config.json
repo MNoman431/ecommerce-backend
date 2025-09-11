@@ -14,10 +14,17 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "fancytopcovers_user",
+    "password": "n2EihbdbGKctFKuSy749rGW8AvNl98fV",
+    "database": "fancytopcovers",
+    "host": "dpg-d30njn6mcj7s73e9c5cg-a.oregon-postgres.render.com",
+    "port": 5432,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }
