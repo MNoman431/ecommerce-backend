@@ -56,6 +56,7 @@ import cartRoutes from "./routes/cart.route.js";
 import orderRoutes from "./routes/order.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import searchRoutes from "./routes/search.routes.js";
+import contactRoutes from "./routes/contact.route.js";
 import { stripeWebhook } from "./controllers/payment.controller.js";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error.middleware.js";
@@ -94,6 +95,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/contacts", contactRoutes);
 
 dbConnection();
 app.use(errorHandler);
